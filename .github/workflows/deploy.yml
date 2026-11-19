@@ -39,15 +39,15 @@ jobs:
             ${{ env.IMAGE }}:${{ github.sha }}
 
       - name: Make container package public
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PACKAGE=$(echo "$GITHUB_REPOSITORY" | cut -d/ -f2 | tr '[:upper:]' '[:lower:]')
-          curl -fsS -X PATCH \
-            -H "Authorization: Bearer $GH_TOKEN" \
+          gh api --method PATCH \
             -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/user/packages/container/$PACKAGE/visibility" \
-            -d '{"visibility":"public"}'
+            "/user/packages/container/$PACKAGE/visibility" \
+            -f visibility=public
 
   deploy:
     needs: build
