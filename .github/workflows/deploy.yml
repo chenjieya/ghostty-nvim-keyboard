@@ -73,9 +73,7 @@ jobs:
         if: steps.check.outputs.ready == 'true'
         uses: appleboy/ssh-action@v1
         env:
-          GH_TOKEN: ${{ secrets.GHCR_TOKEN || secrets.GITHUB_TOKEN }}
           IMAGE: ${{ env.IMAGE }}
-          GH_ACTOR: ${{ github.actor }}
           CONTAINER: keymap-cheatsheet
           PORT: 8084
         with:
@@ -83,9 +81,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT || 22 }}
-          envs: GH_TOKEN,IMAGE,GH_ACTOR,CONTAINER,PORT
+          envs: IMAGE,CONTAINER,PORT
           script: |
-            echo "$GH_TOKEN" | docker login ghcr.io -u "$GH_ACTOR" --password-stdin
             docker pull "$IMAGE:latest"
             docker rm -f "$CONTAINER" || true
             docker run -d --name "$CONTAINER" --restart unless-stopped -p 127.0.0.1:$PORT:80 "$IMAGE:latest"
