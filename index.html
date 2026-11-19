@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>键位速查 · Ghostty / Neovim</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="hero-left">
+        <div class="logo">⌘</div>
+        <div>
+          <h1>键位速查</h1>
+          <p class="subtitle">本地配置 + 官方默认键位，一搜即得</p>
+        </div>
+      </div>
+      <div class="hero-meta" id="versionMeta"></div>
+    </header>
+
+    <nav class="tabs" role="tablist" aria-label="软件切换">
+      <button class="tab active" id="tab-ghostty" role="tab" aria-selected="true" data-app="ghostty">
+        <span class="tab-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2.5" y="4" width="19" height="16" rx="2.5"/>
+            <path d="M6.5 9.5 9 12l-2.5 2.5"/>
+            <path d="M11.5 14.5h4"/>
+          </svg>
+        </span>
+        <span class="tab-label">Ghostty</span>
+        <span class="tab-count" id="count-ghostty">0</span>
+      </button>
+      <button class="tab" id="tab-nvim" role="tab" aria-selected="false" data-app="nvim">
+        <span class="tab-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.5 5h4.4L12 15.2 17.1 5h4.4L12 21.5 2.5 5Z"/>
+            <path d="M8.1 5h2.2L12 9.3 13.7 5h2.2L12 15.8 8.1 5Z" fill="#0a1518"/>
+          </svg>
+        </span>
+        <span class="tab-label">Neovim</span>
+        <span class="tab-count" id="count-nvim">0</span>
+      </button>
+    </nav>
+
+    <section class="toolbar">
+      <div class="search-row">
+        <div class="search-box">
+          <span class="search-icon">⌕</span>
+          <input id="search" type="search" autocomplete="off" spellcheck="false"
+                 placeholder="搜索按键、动作或功能…（按 / 聚焦）">
+          <kbd class="search-hint">/</kbd>
+        </div>
+        <div class="select-wrap">
+          <select id="category" aria-label="分类筛选">
+            <option value="">全部分类</option>
+          </select>
+        </div>
+      </div>
+      <div class="filter-row">
+        <div class="chips" id="sourceFilters">
+          <button class="chip active" data-source="">全部</button>
+          <button class="chip" data-source="local">本地自定义</button>
+          <button class="chip" data-source="builtin">内置基础</button>
+          <button class="chip" data-source="official">官方默认</button>
+        </div>
+        <div class="result-info" id="resultInfo"></div>
+      </div>
+      <p class="config-note" id="configNote"></p>
+    </section>
+
+    <main class="grid" id="grid" aria-live="polite"></main>
+    <div class="empty" id="empty" hidden>没有匹配的键位，换个关键词试试。</div>
+
+    <footer class="foot">
+      <span>数据来源：本地配置文件 + 对应版本官方默认键位</span>
+      <span>点击卡片复制按键 · / 聚焦搜索 · Esc 清空</span>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
